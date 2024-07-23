@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/JNJ_forecaster/static/css/main.0dd96962.css",
+    "main.js": "/JNJ_forecaster/static/js/main.8284bf65.js",
+    "index.html": "/JNJ_forecaster/index.html",
+    "main.0dd96962.css.map": "/JNJ_forecaster/static/css/main.0dd96962.css.map",
+    "main.8284bf65.js.map": "/JNJ_forecaster/static/js/main.8284bf65.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0dd96962.css",
+    "static/js/main.8284bf65.js"
+  ]
+}
