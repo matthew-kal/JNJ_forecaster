@@ -26,7 +26,7 @@ function App() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log("Data from backend:", data); // Log the response data
+      console.log("Data from backend:", data); 
       if (data.results && data.results.length > 0) {
         const results = data.results;
         const newStockData = results.map((value, index) => ({
@@ -35,7 +35,6 @@ function App() {
         }));
         setStockData(newStockData);
 
-        // Calculate the Y-axis domain
         const values = results;
         const minValue = Math.floor(Math.min(...values));
         const maxValue = Math.ceil(Math.max(...values));

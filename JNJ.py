@@ -9,12 +9,10 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from copy import deepcopy as dc
 import joblib
 
-# Load data
 ticker = "JNJ"
 df = yf.download(ticker, start='2000-01-01', end='2024-06-30')[['Close']]
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-# Prepare data
 def prep_df(df, steps):
     df = df.copy()
     for i in range(1, steps + 1):
@@ -22,7 +20,7 @@ def prep_df(df, steps):
     df.dropna(inplace=True)
     return df
 
-lb = 5  # lookback period
+lb = 5  
 data = prep_df(df, lb).to_numpy()
 
 scaler = MinMaxScaler(feature_range=(-1, 1))
@@ -42,7 +40,6 @@ y_train = torch.tensor(y_train).float()
 X_test = torch.tensor(X_test).float()
 y_test = torch.tensor(y_test).float()
 
-# Define Dataset class
 class TSD(Dataset):
     def __init__(self, X, y):
         self.X = X
@@ -57,11 +54,10 @@ class TSD(Dataset):
 train_ds = TSD(X_train, y_train)
 test_ds = TSD(X_test, y_test)
 
-bs = 16  # batch size
+bs = 16  
 train_dl = DataLoader(train_ds, batch_size=bs, shuffle=True)
 test_dl = DataLoader(test_ds, batch_size=bs, shuffle=False)
 
-# Define LSTM model with additional layers and hyperparameter tuning
 class LSTM(nn.Module):
     def __init__(self, hs, drop=0.3):
         super().__init__()
@@ -80,11 +76,10 @@ class LSTM(nn.Module):
         out = self.fc2(out)
         return out
 
-hs = 100  # hidden size
+hs = 100  
 model = LSTM(hs)
 model.to(device)
 
-# Training function
 def train_epoch():
     model.train()
     run_loss = 0.0
@@ -101,7 +96,6 @@ def train_epoch():
             print(f'Batch {i + 1}, Loss: {avg_loss:.3f}')
             run_loss = 0.0
 
-# Validation function
 def val_epoch():
     model.eval()
     run_loss = 0.0
@@ -115,22 +109,19 @@ def val_epoch():
     print(f'Val Loss: {avg_loss:.3f}')
     print('***************************************************')
 
-lr = 0.001  # learning rate
-epochs = 25  # increased epochs for better training
+lr = 0.001  
+epochs = 25  
 loss_fn = nn.MSELoss()
 opt = torch.optim.Adam(model.parameters(), lr=lr)
 
-# Training loop
 for epoch in range(epochs):
     print(f'Epoch: {epoch + 1}')
     train_epoch()
     val_epoch()
 
-# Save the model and scaler
 torch.save(model.state_dict(), 'lstm_model.pth')
 joblib.dump(scaler, 'scaler.pkl')
 
-# Evaluate model performance
 model.eval()
 with torch.no_grad():
     y_pred = model(X_test.to(device)).cpu().numpy()
