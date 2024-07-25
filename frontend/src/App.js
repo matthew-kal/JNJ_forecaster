@@ -95,8 +95,8 @@ function App() {
           <ul>
             <li className='footer'>
               <a>Built by Kal</a>
-              <a href="https://www.linkedin.com/in/matthewkalender/"> <FaLinkedin /> </a>
-              <a href="https://github.com/matthewkalender"> <FaGithub /> </a>
+              <a href="https://www.linkedin.com/in/matthew-kal/"> <FaLinkedin /> </a>
+              <a href="https://github.com/matthew-kal/JNJ_forecaster"> <FaGithub /> </a>
             </li>
           </ul>
         </nav>

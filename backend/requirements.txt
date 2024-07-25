@@ -1,7 +1,0 @@
-fastapi==0.111.0
-uvicorn==0.29.0
-torch==2.3.1
-joblib==1.4.2
-numpy==1.26.4
-yfinance==0.2.41
-scikit-learn==1.5.1
